@@ -50,22 +50,27 @@ This project aims to answer several key business questions:
 
  <img width="524" height="356" alt="image" src="https://github.com/user-attachments/assets/5a163c0f-82f0-47cb-935e-e1f8aeba6bc0" />
 
+
   2. Weather severity analysis
 
 <img width="524" height="350" alt="image" src="https://github.com/user-attachments/assets/54c9dd0e-c185-4bdb-aa55-df4bf81745a1" />
 
+
   3. Delivery efficiency analysis
 
 <img width="745" height="350" alt="image" src="https://github.com/user-attachments/assets/625d4e47-ec8c-4a65-ba4e-9cab0fa84ec5" />
+
 
 ## Customer Analaysis
   1. Customer Rating Distribution
 
 <img width="529" height="353" alt="image" src="https://github.com/user-attachments/assets/ee736cde-d548-4715-8060-021e7a36e74f" />
 
+
   2. Loyalty Segmentation
 
 <img width="637" height="353" alt="image" src="https://github.com/user-attachments/assets/55ed60fe-c541-47d1-8c23-9a2861fcf4cb" />
+
 
 # Feature Engineering
 Several business-oriented features were created to improve model performance and operational interpretability.
@@ -123,3 +128,41 @@ Linear Regression outperformed Random Forest, indicating that the dataset follow
 1. Improve route optimization for long-distance deliveries.
 2. Increase delivery partner allocation during peak hours.
 3. Improve restaurant preparation efficiency.
+
+## Customer Experience Recomendations
+1. Improve ETA Prediction System
+2. Reduce operational delay to improve customer satisfaction
+
+# Project Structure
+Food-Delivery-Operations-Analytics/
+│
+├── data/
+├── notebooks/
+│   ├── data_cleaning.ipynb
+│   ├── exploratory_data_analysis.ipynb
+│   ├── feature_engineering.ipynb
+│   ├── predictive_modeling.ipynb
+│
+├── images/
+├── dashboard/
+├── README.md
+└── requirements.txt
+
+# Conclusion
+This project demonstrates how data analytics and machine learning can be applied to optimize food delivery operations and improve customer experience.
+
+The project combines:
+1. operational analytics,
+2. business intelligence,
+3. feature engineering,
+4. and predictive modeling
+
+into a complete end-to-end analytics workflow suitable for real-world delivery platform scenarios.
+
+**Author**
+
+Muhammad Fadel
+Data Analyst / Data Science Enthusiast
+
+Muhammad Fadel
+Data Analyst / Data Science Enthusiast
