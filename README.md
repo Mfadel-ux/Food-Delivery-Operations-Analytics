@@ -133,6 +133,60 @@ Linear Regression outperformed Random Forest, indicating that the dataset follow
 1. Improve ETA Prediction System
 2. Reduce operational delay to improve customer satisfaction
 
+**Delay Prediction Model**
+Objective
+
+The Delay Prediction Model was developed to identify whether a food delivery order is likely to experience delivery delays based on operational and delivery-related features.
+
+The primary goal of this model is to support proactive operational decision-making by detecting high-risk deliveries before the delivery process is completed.
+
+## Modeling Approach
+
+A binary classification approach was implemented where:
+
+0 = On-Time Delivery
+1 = Delayed Delivery
+
+The delay threshold was determined using the median delivery duration to maintain balanced class distribution and improve classification performance.
+
+## Features Used
+
+The model utilized operational and delivery-related variables, including:
+
+1. delivery distance,
+2. traffic conditions,
+3. weather severity,
+4. preparation time,
+5. delivery efficiency score,
+6. delivery partner experience,
+7. and financial delivery indicators.
+
+Target leakage features were identified and removed to ensure realistic model performance and proper generalization capability.
+
+## Models Evaluated
+
+The following classification models were developed and evaluated:
+
+1. Logistic Regression
+2. Random Forest Classifier
+
+## Model Performance
+| Model               | Accuracy | Precision | Recall | F1 Score |
+| ------------------- | -------- | --------- | ------ | -------- |
+| Logistic Regression | 97.1%    | 96.7%     | 97.3%  | 97.0%    |
+| Random Forest       | 93.7%    | 92.3%     | 95.0%  | 93.6%    |
+
+
+## Business Impact
+
+The Delay Prediction Model can be used as an operational early warning system to:
+
+1. detect high-risk deliveries,
+2. improve ETA accuracy,
+3. optimize delivery resource allocation,
+4. reduce operational bottlenecks,
+5. and improve customer satisfaction through proactive intervention.
+
 # Project Structure
 Food-Delivery-Operations-Analytics/
 │
@@ -142,6 +196,7 @@ Food-Delivery-Operations-Analytics/
 │   ├── exploratory_data_analysis.ipynb
 │   ├── feature_engineering.ipynb
 │   ├── predictive_modeling.ipynb
+│   ├── Delay prediction model.ipynb
 │
 ├── images/
 ├── dashboard/
