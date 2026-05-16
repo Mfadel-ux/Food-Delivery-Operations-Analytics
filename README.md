@@ -170,6 +170,11 @@ The following classification models were developed and evaluated:
 1. Logistic Regression
 2. Random Forest Classifier
 
+## ROC Curve
+
+<img width="519" height="347" alt="image" src="https://github.com/user-attachments/assets/e1436456-44d0-4a74-971d-6dcaa8417617" />
+
+
 ## Model Performance
 | Model               | Accuracy | Precision | Recall | F1 Score |
 | ------------------- | -------- | --------- | ------ | -------- |
