@@ -260,6 +260,11 @@ delivery_fee_per_km = (
     delivery_fee / delivery_distance_km
 )
 
+prep_time_ratio = (
+    preparation_time_minutes /
+    (delivery_distance_km + 1)
+)
+
 # =====================================================
 # BUILD INPUT DATAFRAME
 # =====================================================
@@ -290,7 +295,8 @@ input_data = pd.DataFrame({
     'high_traffic': [high_traffic],
     'severe_weather': [severe_weather],
     'traffic_weather_interaction': [traffic_weather_interaction],
-    'delivery_fee_per_km': [delivery_fee_per_km]
+    'delivery_fee_per_km': [delivery_fee_per_km],
+    'prep_time_ratio': [prep_time_ratio]
 })
 
 # =====================================================
@@ -302,6 +308,8 @@ for col in feature_columns:
         input_data[col] = 0
 
 input_data = input_data[feature_columns]
+
+st.write(input_data)
 
 # =====================================================
 # PREDICTION
