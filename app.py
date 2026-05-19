@@ -19,11 +19,11 @@ st.set_page_config(
 # =====================================================
 
 model = joblib.load(
-    'models/delay_prediction_model.pkl'
+    'delay_prediction_model.pkl'
 )
 
 feature_columns = joblib.load(
-    'models/feature_columns.pkl'
+    'feature_columns.pkl'
 )
 
 # =====================================================
