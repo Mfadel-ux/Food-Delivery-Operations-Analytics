@@ -93,6 +93,8 @@ st.sidebar.header("📥 Delivery Information")
 # HIDDEN DEFAULT VALUES
 # =====================================================
 
+city_tier = 2
+
 customer_age = 30
 customer_loyalty_score = 5
 
