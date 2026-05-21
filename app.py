@@ -89,46 +89,16 @@ st.divider()
 # =====================================================
 
 st.sidebar.header("📥 Delivery Information")
+# =====================================================
+# HIDDEN DEFAULT VALUES
+# =====================================================
 
-city_tier = st.sidebar.selectbox(
-    "City Tier",
-    [1,2,3]
-)
+customer_age = 30
+customer_loyalty_score = 5
 
-customer_age = st.sidebar.slider(
-    "Customer Age",
-    18,
-    65,
-    30
-)
-
-customer_loyalty_score = st.sidebar.slider(
-    "Customer Loyalty Score",
-    1,
-    10,
-    5
-)
-
-order_hour = st.sidebar.slider(
-    "Order Hour",
-    0,
-    23,
-    12
-)
-
-order_day_of_week = st.sidebar.slider(
-    "Order Day of Week",
-    0,
-    6,
-    3
-)
-
-order_month = st.sidebar.slider(
-    "Order Month",
-    1,
-    12,
-    6
-)
+order_hour = 14
+order_day_of_week = 3
+order_month = 6
 
 # =====================================================
 # OPERATIONAL CONDITIONS
