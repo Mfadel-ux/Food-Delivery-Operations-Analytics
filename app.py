@@ -331,6 +331,21 @@ input_data = pd.get_dummies(
     columns=categorical_cols,
     drop_first=True
 )
+
+# =====================================================
+# FEATURE ALIGNMENT
+# =====================================================
+
+for col in feature_columns:
+
+    if col not in input_data.columns:
+        input_data[col] = 0
+
+# Reorder columns
+input_data = input_data[
+    feature_columns
+]
+
 for col in feature_columns:
     if col not in input_data.columns:
         input_data[col] = 0
