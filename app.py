@@ -260,11 +260,48 @@ delivery_fee_per_km = (
     delivery_fee / delivery_distance_km
 )
 
+
 prep_time_ratio = (
     preparation_time_minutes /
     (delivery_distance_km + 1)
 )
 
+# =====================================================
+# CATEGORICAL FEATURE ENGINEERING
+# =====================================================
+
+# Traffic Category
+if traffic_level_score <= 3:
+    traffic_category = 'Low'
+elif traffic_level_score <= 7:
+    traffic_category = 'Moderate'
+else:
+    traffic_category = 'High'
+
+# Weather Category
+if weather_severity_score <= 3:
+    weather_category = 'Clear'
+elif weather_severity_score <= 7:
+    weather_category = 'Moderate'
+else:
+    weather_category = 'Severe'
+
+# Loyalty Segment
+if customer_loyalty_score <= 3:
+    loyalty_segment = 'Low'
+elif customer_loyalty_score <= 7:
+    loyalty_segment = 'Regular'
+else:
+    loyalty_segment = 'VIP'
+
+# Customer Value Segment
+if order_value <= 25:
+    customer_value_segment = 'Low Value'
+elif order_value <= 80:
+    customer_value_segment = 'Medium Value'
+else:
+    customer_value_segment = 'Premium'
+    
 # =====================================================
 # BUILD INPUT DATAFRAME
 # =====================================================
@@ -296,13 +333,32 @@ input_data = pd.DataFrame({
     'severe_weather': [severe_weather],
     'traffic_weather_interaction': [traffic_weather_interaction],
     'delivery_fee_per_km': [delivery_fee_per_km],
-    'prep_time_ratio': [prep_time_ratio]
+    'prep_time_ratio': [prep_time_ratio],
+    'traffic_category': [traffic_category],
+    'weather_category': [weather_category],
+    'loyalty_segment': [loyalty_segment],
+    'customer_value_segment': [customer_value_segment]
 })
 
 # =====================================================
 # FEATURE ALIGNMENT
 # =====================================================
+# =====================================================
+# ONE HOT ENCODING
+# =====================================================
 
+categorical_cols = [
+    'traffic_category',
+    'weather_category',
+    'loyalty_segment',
+    'customer_value_segment'
+]
+
+input_data = pd.get_dummies(
+    input_data,
+    columns=categorical_cols,
+    drop_first=True
+)
 for col in feature_columns:
     if col not in input_data.columns:
         input_data[col] = 0
