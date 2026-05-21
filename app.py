@@ -346,14 +346,9 @@ input_data = input_data[
     feature_columns
 ]
 
-for col in feature_columns:
-    if col not in input_data.columns:
-        input_data[col] = 0
+st.write(feature_columns)
 
-input_data = input_data[feature_columns]
-
-st.write(input_data)
-
+st.write(input_data.T)
 # =====================================================
 # PREDICTION
 # =====================================================
