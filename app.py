@@ -132,6 +132,57 @@ section[data-testid="stSidebar"]{
     font-weight:700;
 }
 
+/* Risk Boxes */
+
+.risk-high{
+    background: rgba(239,68,68,0.15);
+    border:1px solid rgba(239,68,68,0.4);
+    padding:25px;
+    border-radius:18px;
+    text-align:center;
+    color:#f87171;
+    font-size:30px;
+    font-weight:800;
+}
+
+.risk-low{
+    background: rgba(34,197,94,0.15);
+    border:1px solid rgba(34,197,94,0.4);
+    padding:25px;
+    border-radius:18px;
+    text-align:center;
+    color:#4ade80;
+    font-size:30px;
+    font-weight:800;
+}
+
+/* Recommendation Box */
+
+.recommend-box{
+    background: rgba(255,255,255,0.04);
+    border-left: 4px solid #3b82f6;
+    padding:20px;
+    border-radius:15px;
+    color:white;
+    margin-bottom:15px;
+}
+
+/* Progress Bar */
+
+.stProgress > div > div > div > div{
+    background: linear-gradient(
+        90deg,
+        #f59e0b,
+        #ef4444
+    );
+}
+
+/* Slider */
+
+.stSlider > div[data-baseweb="slider"] > div{
+    color:#f97316;
+}
+
 /* Hide Streamlit */
 
 #MainMenu {visibility:hidden;}
@@ -171,6 +222,11 @@ ML-powered prediction based on operational factors
 # =====================================================
 
 st.sidebar.header("📥 Delivery Information")
+
+st.sidebar.markdown("""
+### 🟢 Operational Conditions
+Configure real-time delivery parameters
+""")
 
 # =====================================================
 # HIDDEN DEFAULT VALUES
@@ -603,10 +659,16 @@ fig.update_layout(
     height=450
 )
 
+st.markdown("""
+<div class="metric-card">
+""", unsafe_allow_html=True)
+
 st.plotly_chart(
     fig,
     use_container_width=True
 )
+
+st.markdown("</div>", unsafe_allow_html=True)
 
 # =====================================================
 # RISK CONTRIBUTORS
@@ -627,105 +689,21 @@ contributors = {
 
 for name, value in contributors.items():
 
+    st.markdown(f"""
+    <div style="
+        display:flex;
+        justify-content:space-between;
+        margin-bottom:5px;
+        color:white;
+        font-weight:600;
+    ">
+        <span>{name}</span>
+        <span>{value:.0f}%</span>
+    </div>
+    """, unsafe_allow_html=True)
+
     st.progress(min(value/100,1.0))
-
-    st.markdown(
-        f"""
-        <div style='margin-bottom:20px'>
-        <b>{name}</b> — {value:.0f}% impact
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
     
-
-# =====================================================
-# MAIN RESULT SECTION
-# =====================================================
-
-st.divider()
-
-col1, col2 = st.columns([1,1])
-
-with col1:
-
-    st.markdown(
-        '<p class="section-title">🚨 Delay Prediction</p>',
-        unsafe_allow_html=True
-    )
-
-    if prediction == 1:
-
-        st.markdown(
-            f"""
-            <div class="risk-high">
-                HIGH DELAY RISK<br>
-                {probability:.1%}
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
-
-    else:
-
-        st.markdown(
-            f"""
-            <div class="risk-low">
-                LOW DELAY RISK<br>
-                {(1-probability):.1%}
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
-
-with col2:
-
-    st.markdown(
-        '<p class="section-title">📊 Delay Probability</p>',
-        unsafe_allow_html=True
-    )
-
-    fig = go.Figure(go.Indicator(
-
-        mode = "gauge+number",
-
-        value = probability * 100,
-
-        number = {
-            'suffix': "%",
-            'font': {'size': 42}
-        },
-
-        gauge = {
-
-            'axis': {
-                'range': [0, 100],
-                'tickwidth': 1
-            },
-
-            'bar': {
-                'color': "#ef4444"
-            },
-
-            'steps': [
-                {'range': [0, 30], 'color': "#22c55e"},
-                {'range': [30, 70], 'color': "#f59e0b"},
-                {'range': [70, 100], 'color': "#ef4444"}
-            ]
-        }
-    ))
-
-    fig.update_layout(
-        paper_bgcolor="#0f172a",
-        font={'color': "white"},
-        height=320,
-        margin=dict(l=20, r=20, t=40, b=20)
-    )
-
-    st.plotly_chart(
-        fig,
-        use_container_width=True
-    )
 # =====================================================
 # OPERATIONAL INSIGHTS
 # =====================================================
