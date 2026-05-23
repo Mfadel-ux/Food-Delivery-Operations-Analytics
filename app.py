@@ -27,6 +27,10 @@ feature_columns = joblib.load("feature_columns.pkl")
 st.markdown("""
 <style>
 
+/* =====================================================
+BACKGROUND
+===================================================== */
+
 .stApp{
     background: linear-gradient(
         135deg,
@@ -37,20 +41,34 @@ st.markdown("""
     color:white;
 }
 
-/* Sidebar */
+/* =====================================================
+SIDEBAR
+===================================================== */
 
 section[data-testid="stSidebar"]{
-    background: #081120;
-    border-right: 1px solid rgba(255,255,255,0.08);
+    background:#081120;
+    border-right:1px solid rgba(255,255,255,0.08);
 }
 
-/* Hide Streamlit */
+/* =====================================================
+HIDE STREAMLIT
+===================================================== */
 
-#MainMenu {visibility:hidden;}
-footer {visibility:hidden;}
-header {visibility:hidden;}
+#MainMenu{
+    visibility:hidden;
+}
 
-/* Main Title */
+footer{
+    visibility:hidden;
+}
+
+header{
+    visibility:hidden;
+}
+
+/* =====================================================
+HEADER
+===================================================== */
 
 .main-title{
     font-size:42px;
@@ -65,11 +83,23 @@ header {visibility:hidden;}
     margin-bottom:30px;
 }
 
-/* Metric Cards */
-st.markdown("""
-<style>
+/* =====================================================
+SECTION TITLE
+===================================================== */
+
+.section-title{
+    color:white;
+    font-size:24px;
+    font-weight:700;
+    margin-bottom:20px;
+}
+
+/* =====================================================
+METRIC CARD
+===================================================== */
 
 .metric-card{
+
     background: linear-gradient(
         145deg,
         rgba(15,23,42,0.95),
@@ -91,86 +121,151 @@ st.markdown("""
         inset 0 1px 1px rgba(255,255,255,0.04);
 
     min-height:180px;
+
+    transition:0.3s ease;
+}
+
+.metric-card:hover{
+
+    transform:translateY(-4px);
+
+    border:1px solid rgba(96,165,250,0.35);
 }
 
 .metric-title{
+
     color:#94a3b8;
+
     font-size:15px;
+
     font-weight:600;
+
     letter-spacing:0.5px;
+
     margin-bottom:18px;
 }
 
 .metric-value{
+
     font-size:44px;
+
     font-weight:800;
+
     line-height:1;
+
     margin-bottom:16px;
 }
 
 .metric-sub{
+
     color:#64748b;
+
     font-size:14px;
 }
 
-</style>
-""", unsafe_allow_html=True)/* Insight Box */
+/* =====================================================
+INSIGHT BOX
+===================================================== */
 
 .insight-box{
-    background: rgba(255,255,255,0.04);
-    border-left: 4px solid #22c55e;
+
+    background:rgba(255,255,255,0.04);
+
+    border-left:4px solid #22c55e;
+
     padding:20px;
+
     border-radius:15px;
+
     color:white;
+
     margin-bottom:15px;
 }
 
-.metric-sub{
-    color:#64748b;
-    font-size:14px;
-}
-
-div[data-testid="stMarkdownContainer"] p {
-    margin-bottom: 0;
-}
-
-/* Recommendation Box */
+/* =====================================================
+RECOMMENDATION BOX
+===================================================== */
 
 .recommend-box{
-    background: rgba(255,255,255,0.04);
-    border-left: 4px solid #3b82f6;
+
+    background:rgba(255,255,255,0.04);
+
+    border-left:4px solid #3b82f6;
+
     padding:20px;
+
     border-radius:15px;
+
     color:white;
+
     margin-bottom:15px;
 }
 
-/* Summary Box */
+/* =====================================================
+SUMMARY BOX
+===================================================== */
 
 .summary-box{
-    background: rgba(255,255,255,0.04);
-    border:1px solid rgba(255,255,255,0.05);
-    padding:20px;
-    border-radius:18px;
+
+    background: linear-gradient(
+        145deg,
+        rgba(15,23,42,0.95),
+        rgba(30,41,59,0.85)
+    );
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    padding:22px;
+
+    border-radius:20px;
+
+    backdrop-filter: blur(12px);
+
+    -webkit-backdrop-filter: blur(12px);
+
+    box-shadow:
+        0 8px 24px rgba(0,0,0,0.25);
+
     text-align:center;
+
+    min-height:130px;
+
+    transition:0.3s ease;
 }
 
-/* Summary Text */
+.summary-box:hover{
+
+    transform:translateY(-4px);
+
+    border:1px solid rgba(96,165,250,0.35);
+}
 
 .summary-title{
+
     color:#94a3b8;
-    font-size:14px;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    margin-bottom:14px;
 }
 
 .summary-value{
+
     color:white;
-    font-size:26px;
-    font-weight:700;
+
+    font-size:32px;
+
+    font-weight:800;
 }
 
-/* Progress Bar */
+/* =====================================================
+PROGRESS BAR
+===================================================== */
 
 .stProgress > div > div > div > div{
+
     background: linear-gradient(
         90deg,
         #f59e0b,
@@ -178,34 +273,24 @@ div[data-testid="stMarkdownContainer"] p {
     );
 }
 
-/* Slider */
+/* =====================================================
+SLIDER
+===================================================== */
 
 .stSlider > div[data-baseweb="slider"] > div{
     color:#f97316;
 }
 
+/* =====================================================
+REMOVE EXTRA MARGIN
+===================================================== */
+
+div[data-testid="stMarkdownContainer"] p{
+    margin-bottom:0;
+}
+
 </style>
-""", unsafe_allow_html=True)
-
-# =====================================================
-# HEADER
-# =====================================================
-
-st.markdown("""
-<div style="margin-bottom:30px;">
-
-<p class="main-title">
-🚚 Delivery Delay Risk Prediction
-</p>
-
-<p class="subtitle">
-ML-powered prediction based on operational factors
-</p>
-
-</div>
-""", unsafe_allow_html=True)
-
-# =====================================================
+""", unsafe_allow_html=True)# =====================================================
 # SIDEBAR
 # =====================================================
 
