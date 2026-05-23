@@ -30,98 +30,141 @@ feature_columns = joblib.load(
 # CUSTOM CSS
 # =====================================================
 
-st.markdown(
-    """
-    <style>
+st.markdown("""
+<style>
 
-    .stApp {
-        background-color: #0f172a;
-    }
+.stApp{
+    background: linear-gradient(
+        135deg,
+        #081120 0%,
+        #0f172a 40%,
+        #111827 100%
+    );
+    color:white;
+}
 
-    .main-title {
-        font-size: 42px;
-        font-weight: 800;
-        color: white;
-        margin-bottom: 0;
-    }
+/* Sidebar */
 
-    .subtitle {
-        font-size: 18px;
-        color: #94a3b8;
-        margin-top: 0;
-        margin-bottom: 30px;
-    }
+section[data-testid="stSidebar"]{
+    background: #081120;
+    border-right: 1px solid rgba(255,255,255,0.08);
+}
 
-    .card {
-        background-color: #1e293b;
-        padding: 25px;
-        border-radius: 18px;
-        box-shadow: 0px 4px 15px rgba(0,0,0,0.25);
-    }
+/* Main Title */
 
-    .risk-high {
-        background-color: #7f1d1d;
-        padding: 20px;
-        border-radius: 15px;
-        color: white;
-        font-size: 24px;
-        font-weight: bold;
-        text-align: center;
-    }
+.main-title{
+    font-size:42px;
+    font-weight:800;
+    color:white;
+    margin-bottom:5px;
+}
 
-    .risk-low {
-        background-color: #14532d;
-        padding: 20px;
-        border-radius: 15px;
-        color: white;
-        font-size: 24px;
-        font-weight: bold;
-        text-align: center;
-    }
+.subtitle{
+    color:#94a3b8;
+    font-size:18px;
+    margin-bottom:30px;
+}
 
-    .section-title {
-        font-size: 28px;
-        font-weight: 700;
-        color: white;
-        margin-bottom: 20px;
-    }
+/* Cards */
 
-    .insight-box {
-        background-color: #1e293b;
-        padding: 18px;
-        border-radius: 12px;
-        color: white;
-        margin-bottom: 10px;
-    }
+.metric-card{
+    background: rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.08);
+    padding:25px;
+    border-radius:20px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 30px rgba(0,0,0,0.2);
+}
 
-    .recommend-box {
-        background-color: #064e3b;
-        padding: 18px;
-        border-radius: 12px;
-        color: white;
-        margin-bottom: 10px;
-    }
+.metric-title{
+    color:#cbd5e1;
+    font-size:15px;
+    font-weight:600;
+}
 
-    </style>
-    """,
-    unsafe_allow_html=True
-)
+.metric-value{
+    font-size:42px;
+    font-weight:800;
+}
+
+.metric-sub{
+    color:#94a3b8;
+    font-size:14px;
+}
+
+/* Section */
+
+.section-title{
+    color:white;
+    font-size:24px;
+    font-weight:700;
+    margin-bottom:20px;
+}
+
+/* Insight Box */
+
+.insight-box{
+    background: rgba(255,255,255,0.04);
+    border-left: 4px solid #22c55e;
+    padding:20px;
+    border-radius:15px;
+    color:white;
+}
+
+/* Summary Box */
+
+.summary-box{
+    background: rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.05);
+    padding:20px;
+    border-radius:18px;
+    text-align:center;
+}
+
+.summary-title{
+    color:#94a3b8;
+    font-size:14px;
+}
+
+.summary-value{
+    color:white;
+    font-size:26px;
+    font-weight:700;
+}
+
+/* Hide Streamlit */
+
+#MainMenu {visibility:hidden;}
+footer {visibility:hidden;}
+header {visibility:hidden;}
+
+</style>
+""", unsafe_allow_html=True)
+
 # =====================================================
 # HEADER
 # =====================================================
 
-st.markdown(
-    """
-    <p class="main-title">
-        🚚 Food Delivery Delay Prediction System
-    </p>
+st.markdown("""
+<div style="display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:30px;">
 
-    <p class="subtitle">
-        AI-Powered Operational Delivery Risk Analytics
-    </p>
-    """,
-    unsafe_allow_html=True
-)
+<div>
+
+<p class="main-title">
+🚚 Delivery Delay Risk Prediction
+</p>
+
+<p class="subtitle">
+ML-powered prediction based on operational factors
+</p>
+
+</div>
+
+</div>
+""", unsafe_allow_html=True)
 
 # =====================================================
 # SIDEBAR INPUT
@@ -400,6 +443,203 @@ probability = model.predict_proba(
 )[0][1]
 
 # =====================================================
+# TOP METRIC CARDS
+# =====================================================
+
+card1, card2, card3, card4 = st.columns(4)
+
+risk_color = "#ef4444" if probability >= 0.7 else "#f59e0b" if probability >= 0.3 else "#22c55e"
+
+risk_text = (
+    "High"
+    if probability >= 0.7
+    else "Medium"
+    if probability >= 0.3
+    else "Low"
+)
+
+with card1:
+
+    st.markdown(f"""
+    <div class="metric-card">
+        <div class="metric-title">
+        DELAY RISK
+        </div>
+
+        <div class="metric-value" style="color:{risk_color}">
+        {probability:.1%}
+        </div>
+
+        <div class="metric-sub">
+        Prediction Probability
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with card2:
+
+    st.markdown(f"""
+    <div class="metric-card">
+        <div class="metric-title">
+        RISK LEVEL
+        </div>
+
+        <div class="metric-value" style="color:{risk_color}">
+        {risk_text}
+        </div>
+
+        <div class="metric-sub">
+        Operational Risk Status
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with card3:
+
+    confidence = (
+        probability
+        if probability > 0.5
+        else 1 - probability
+    )
+
+    st.markdown(f"""
+    <div class="metric-card">
+        <div class="metric-title">
+        CONFIDENCE
+        </div>
+
+        <div class="metric-value" style="color:#60a5fa">
+        {confidence:.1%}
+        </div>
+
+        <div class="metric-sub">
+        Model Confidence
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with card4:
+
+    st.markdown("""
+    <div class="metric-card">
+        <div class="metric-title">
+        MODEL STATUS
+        </div>
+
+        <div class="metric-value" style="color:#4ade80">
+        Healthy
+        </div>
+
+        <div class="metric-sub">
+        Model is performing well
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+# =====================================================
+# PREMIUM GAUGE
+# =====================================================
+
+st.markdown(
+    '<p class="section-title">📊 Predicted Delay Risk</p>',
+    unsafe_allow_html=True
+)
+
+fig = go.Figure(go.Indicator(
+
+    mode = "gauge+number",
+
+    value = probability * 100,
+
+    number = {
+        'suffix': "%",
+        'font': {
+            'size': 52,
+            'color': "white"
+        }
+    },
+
+    title = {
+        'text': "Probability of Delivery Delay",
+        'font': {'size': 22}
+    },
+
+    gauge = {
+
+        'axis': {
+            'range': [0,100],
+            'tickcolor': "white"
+        },
+
+        'bar': {
+            'color': "#f97316"
+        },
+
+        'bgcolor': "rgba(0,0,0,0)",
+
+        'steps': [
+
+            {
+                'range':[0,30],
+                'color':"#22c55e"
+            },
+
+            {
+                'range':[30,70],
+                'color':"#fbbf24"
+            },
+
+            {
+                'range':[70,100],
+                'color':"#ef4444"
+            }
+        ]
+    }
+))
+
+fig.update_layout(
+    paper_bgcolor='rgba(0,0,0,0)',
+    font={'color': "white"},
+    height=450
+)
+
+st.plotly_chart(
+    fig,
+    use_container_width=True
+)
+
+# =====================================================
+# RISK CONTRIBUTORS
+# =====================================================
+
+st.markdown(
+    '<p class="section-title">⚠️ Top Risk Contributors</p>',
+    unsafe_allow_html=True
+)
+
+contributors = {
+
+    "Traffic Level": traffic_level_score * 10,
+    "Weather Severity": weather_severity_score * 10,
+    "Delivery Distance": delivery_distance_km * 3,
+    "Preparation Time": preparation_time_minutes * 1.5
+}
+
+for name, value in contributors.items():
+
+    st.progress(min(value/100,1.0))
+
+    st.markdown(
+        f"""
+        <div style='margin-bottom:20px'>
+        <b>{name}</b> — {value:.0f}% impact
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+    
+
+# =====================================================
 # MAIN RESULT SECTION
 # =====================================================
 
@@ -587,3 +827,46 @@ st.divider()
 st.caption(
     "Developed by Muhammad Fadel | Food Delivery Operations Analytics"
 )
+
+# =====================================================
+# OPERATIONAL SUMMARY
+# =====================================================
+
+st.markdown(
+    '<p class="section-title">📋 Current Operational Summary</p>',
+    unsafe_allow_html=True
+)
+
+sum1, sum2, sum3, sum4 = st.columns(4)
+
+with sum1:
+    st.markdown(f"""
+    <div class="summary-box">
+        <div class="summary-title">Distance</div>
+        <div class="summary-value">{delivery_distance_km} km</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with sum2:
+    st.markdown(f"""
+    <div class="summary-box">
+        <div class="summary-title">Prep Time</div>
+        <div class="summary-value">{preparation_time_minutes} min</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with sum3:
+    st.markdown(f"""
+    <div class="summary-box">
+        <div class="summary-title">Traffic</div>
+        <div class="summary-value">{traffic_level_score}/10</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with sum4:
+    st.markdown(f"""
+    <div class="summary-box">
+        <div class="summary-title">Weather</div>
+        <div class="summary-value">{weather_severity_score}/10</div>
+    </div>
+    """, unsafe_allow_html=True)
