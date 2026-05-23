@@ -66,42 +66,55 @@ header {visibility:hidden;}
 }
 
 /* Metric Cards */
+st.markdown("""
+<style>
 
 .metric-card{
-    background: rgba(255,255,255,0.04);
+    background: linear-gradient(
+        145deg,
+        rgba(15,23,42,0.95),
+        rgba(30,41,59,0.85)
+    );
+
     border:1px solid rgba(255,255,255,0.08);
-    padding:25px;
-    border-radius:20px;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 0 30px rgba(0,0,0,0.2);
+
+    padding:28px;
+
+    border-radius:22px;
+
+    backdrop-filter: blur(14px);
+
+    -webkit-backdrop-filter: blur(14px);
+
+    box-shadow:
+        0 8px 32px rgba(0,0,0,0.35),
+        inset 0 1px 1px rgba(255,255,255,0.04);
+
+    min-height:180px;
 }
 
 .metric-title{
-    color:#cbd5e1;
+    color:#94a3b8;
     font-size:15px;
     font-weight:600;
+    letter-spacing:0.5px;
+    margin-bottom:18px;
 }
 
 .metric-value{
-    font-size:42px;
+    font-size:44px;
     font-weight:800;
+    line-height:1;
+    margin-bottom:16px;
 }
 
 .metric-sub{
-    color:#94a3b8;
+    color:#64748b;
     font-size:14px;
 }
 
-/* Section */
-
-.section-title{
-    color:white;
-    font-size:24px;
-    font-weight:700;
-    margin-bottom:20px;
-}
-
-/* Insight Box */
+</style>
+""", unsafe_allow_html=True)/* Insight Box */
 
 .insight-box{
     background: rgba(255,255,255,0.04);
@@ -110,6 +123,15 @@ header {visibility:hidden;}
     border-radius:15px;
     color:white;
     margin-bottom:15px;
+}
+
+.metric-sub{
+    color:#64748b;
+    font-size:14px;
+}
+
+div[data-testid="stMarkdownContainer"] p {
+    margin-bottom: 0;
 }
 
 /* Recommendation Box */
@@ -574,9 +596,84 @@ st.markdown(f"""
 # =====================================================
 
 st.markdown(
-    '<p class="section-title">📋 Current Operational Summary</p>',
+    '''
+    <p class="section-title">
+    📋 Current Operational Summary
+    </p>
+    ''',
     unsafe_allow_html=True
 )
+
+# =====================================================
+# SUMMARY CSS
+# =====================================================
+
+st.markdown("""
+<style>
+
+.summary-box{
+
+    background: linear-gradient(
+        145deg,
+        rgba(15,23,42,0.95),
+        rgba(30,41,59,0.85)
+    );
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    padding:22px;
+
+    border-radius:20px;
+
+    backdrop-filter: blur(12px);
+
+    -webkit-backdrop-filter: blur(12px);
+
+    box-shadow:
+        0 8px 24px rgba(0,0,0,0.25);
+
+    text-align:center;
+
+    transition:0.3s ease;
+
+    min-height:130px;
+}
+
+.summary-box:hover{
+    transform: translateY(-4px);
+    border:1px solid rgba(96,165,250,0.4);
+}
+
+.summary-title{
+
+    color:#94a3b8;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    margin-bottom:14px;
+
+    letter-spacing:0.5px;
+}
+
+.summary-value{
+
+    color:white;
+
+    font-size:32px;
+
+    font-weight:800;
+
+    line-height:1.2;
+}
+
+</style>
+""", unsafe_allow_html=True)
+
+# =====================================================
+# SUMMARY CARDS
+# =====================================================
 
 sum1, sum2, sum3, sum4 = st.columns(4)
 
@@ -584,13 +681,15 @@ with sum1:
 
     st.markdown(f"""
     <div class="summary-box">
+
         <div class="summary-title">
-        Distance
+        🚚 Distance
         </div>
 
         <div class="summary-value">
-        {delivery_distance_km} km
+        {delivery_distance_km:.1f} km
         </div>
+
     </div>
     """, unsafe_allow_html=True)
 
@@ -598,13 +697,15 @@ with sum2:
 
     st.markdown(f"""
     <div class="summary-box">
+
         <div class="summary-title">
-        Prep Time
+        ⏱️ Prep Time
         </div>
 
         <div class="summary-value">
         {preparation_time_minutes} min
         </div>
+
     </div>
     """, unsafe_allow_html=True)
 
@@ -612,13 +713,15 @@ with sum3:
 
     st.markdown(f"""
     <div class="summary-box">
+
         <div class="summary-title">
-        Traffic
+        🚦 Traffic
         </div>
 
         <div class="summary-value">
         {traffic_level_score}/10
         </div>
+
     </div>
     """, unsafe_allow_html=True)
 
@@ -626,16 +729,17 @@ with sum4:
 
     st.markdown(f"""
     <div class="summary-box">
+
         <div class="summary-title">
-        Weather
+        🌧️ Weather
         </div>
 
         <div class="summary-value">
         {weather_severity_score}/10
         </div>
+
     </div>
     """, unsafe_allow_html=True)
-
 # =====================================================
 # FOOTER
 # =====================================================
