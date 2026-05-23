@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import numpy as np
 import joblib
 import plotly.graph_objects as go
 
@@ -17,8 +18,13 @@ st.set_page_config(
 # LOAD MODEL
 # =====================================================
 
-model = joblib.load("delay_prediction_model.pkl")
-feature_columns = joblib.load("feature_columns.pkl")
+model = joblib.load(
+    'delay_prediction_model.pkl'
+)
+
+feature_columns = joblib.load(
+    'feature_columns.pkl'
+)
 
 # =====================================================
 # CUSTOM CSS
@@ -54,20 +60,12 @@ section[data-testid="stSidebar"]{
 HIDE STREAMLIT
 ===================================================== */
 
-#MainMenu{
-    visibility:hidden;
-}
-
-footer{
-    visibility:hidden;
-}
-
-header{
-    visibility:hidden;
-}
+#MainMenu {visibility:hidden;}
+footer {visibility:hidden;}
+header {visibility:hidden;}
 
 /* =====================================================
-HEADER
+TITLE
 ===================================================== */
 
 .main-title{
@@ -99,68 +97,31 @@ METRIC CARD
 ===================================================== */
 
 .metric-card{
-
-    background: linear-gradient(
-        145deg,
-        rgba(15,23,42,0.95),
-        rgba(30,41,59,0.85)
-    );
-
+    background:#111827;
     border:1px solid rgba(255,255,255,0.08);
-
-    padding:28px;
-
-    border-radius:22px;
-
-    backdrop-filter: blur(14px);
-
-    -webkit-backdrop-filter: blur(14px);
-
-    box-shadow:
-        0 8px 32px rgba(0,0,0,0.35),
-        inset 0 1px 1px rgba(255,255,255,0.04);
-
-    min-height:180px;
-
-    transition:0.3s ease;
-}
-
-.metric-card:hover{
-
-    transform:translateY(-4px);
-
-    border:1px solid rgba(96,165,250,0.35);
+    border-radius:20px;
+    padding:25px;
+    text-align:center;
+    min-height:170px;
+    box-shadow:0 4px 20px rgba(0,0,0,0.35);
 }
 
 .metric-title{
-
     color:#94a3b8;
-
-    font-size:15px;
-
+    font-size:14px;
     font-weight:600;
-
-    letter-spacing:0.5px;
-
-    margin-bottom:18px;
+    margin-bottom:15px;
 }
 
 .metric-value{
-
-    font-size:44px;
-
+    font-size:42px;
     font-weight:800;
-
-    line-height:1;
-
-    margin-bottom:16px;
+    margin-bottom:10px;
 }
 
 .metric-sub{
-
     color:#64748b;
-
-    font-size:14px;
+    font-size:13px;
 }
 
 /* =====================================================
@@ -168,36 +129,24 @@ INSIGHT BOX
 ===================================================== */
 
 .insight-box{
-
     background:rgba(255,255,255,0.04);
-
     border-left:4px solid #22c55e;
-
     padding:20px;
-
     border-radius:15px;
-
     color:white;
-
     margin-bottom:15px;
 }
 
 /* =====================================================
-RECOMMENDATION BOX
+RECOMMEND BOX
 ===================================================== */
 
 .recommend-box{
-
     background:rgba(255,255,255,0.04);
-
     border-left:4px solid #3b82f6;
-
     padding:20px;
-
     border-radius:15px;
-
     color:white;
-
     margin-bottom:15px;
 }
 
@@ -206,58 +155,23 @@ SUMMARY BOX
 ===================================================== */
 
 .summary-box{
-
-    background: linear-gradient(
-        145deg,
-        rgba(15,23,42,0.95),
-        rgba(30,41,59,0.85)
-    );
-
+    background:#111827;
     border:1px solid rgba(255,255,255,0.08);
-
-    padding:22px;
-
-    border-radius:20px;
-
-    backdrop-filter: blur(12px);
-
-    -webkit-backdrop-filter: blur(12px);
-
-    box-shadow:
-        0 8px 24px rgba(0,0,0,0.25);
-
+    padding:20px;
+    border-radius:18px;
     text-align:center;
-
-    min-height:130px;
-
-    transition:0.3s ease;
-}
-
-.summary-box:hover{
-
-    transform:translateY(-4px);
-
-    border:1px solid rgba(96,165,250,0.35);
 }
 
 .summary-title{
-
     color:#94a3b8;
-
-    font-size:15px;
-
-    font-weight:600;
-
-    margin-bottom:14px;
+    font-size:14px;
+    margin-bottom:10px;
 }
 
 .summary-value{
-
     color:white;
-
-    font-size:32px;
-
-    font-weight:800;
+    font-size:28px;
+    font-weight:700;
 }
 
 /* =====================================================
@@ -265,7 +179,6 @@ PROGRESS BAR
 ===================================================== */
 
 .stProgress > div > div > div > div{
-
     background: linear-gradient(
         90deg,
         #f59e0b,
@@ -281,75 +194,85 @@ SLIDER
     color:#f97316;
 }
 
-/* =====================================================
-REMOVE EXTRA MARGIN
-===================================================== */
-
-div[data-testid="stMarkdownContainer"] p{
-    margin-bottom:0;
-}
-
 </style>
-""", unsafe_allow_html=True)# =====================================================
-# SIDEBAR
+""", unsafe_allow_html=True)
+
+# =====================================================
+# HEADER
 # =====================================================
 
-st.sidebar.markdown("## ⚙️ Operational Conditions")
+st.markdown("""
+<div style="margin-bottom:30px;">
+
+<p class="main-title">
+🚚 Delivery Delay Risk Prediction
+</p>
+
+<p class="subtitle">
+ML-powered prediction based on operational factors
+</p>
+
+</div>
+""", unsafe_allow_html=True)
+
+# =====================================================
+# SIDEBAR INPUT
+# =====================================================
+
+st.sidebar.header("📥 Delivery Information")
+
+city_tier = 2
+customer_age = 30
+customer_loyalty_score = 5
+
+order_hour = 14
+order_day_of_week = 3
+order_month = 6
+
+# =====================================================
+# OPERATIONAL CONDITIONS
+# =====================================================
+
+st.sidebar.header("⚙️ Operational Conditions")
 
 delivery_distance_km = st.sidebar.slider(
     "Delivery Distance (km)",
-    1.0,
-    30.0,
-    10.0
+    1.0, 30.0, 10.0
 )
 
 preparation_time_minutes = st.sidebar.slider(
     "Preparation Time (minutes)",
-    5,
-    60,
-    20
+    5, 60, 20
 )
 
 traffic_level_score = st.sidebar.slider(
     "Traffic Level Score",
-    1,
-    10,
-    5
+    1, 10, 5
 )
 
 weather_severity_score = st.sidebar.slider(
     "Weather Severity Score",
-    1,
-    10,
-    3
+    1, 10, 3
 )
 
 restaurant_rating = st.sidebar.slider(
     "Restaurant Rating",
-    1.0,
-    5.0,
-    4.0
+    1.0, 5.0, 4.0
 )
 
 delivery_partner_rating = st.sidebar.slider(
     "Delivery Partner Rating",
-    1.0,
-    5.0,
-    4.0
+    1.0, 5.0, 4.0
 )
 
 number_of_items = st.sidebar.slider(
     "Number of Items",
-    1,
-    10,
-    3
+    1, 10, 3
 )
 
 delivery_partner_experience_years = st.sidebar.slider(
-    "Driver Experience",
-    0,
-    15,
-    5
+    "Driver Experience (Years)",
+    0, 15, 5
 )
 
 # =====================================================
@@ -357,24 +280,23 @@ delivery_partner_experience_years = st.sidebar.slider(
 # =====================================================
 
 is_peak_hour = 1 if (
-    (11 <= 14 <= 14) or
-    (18 <= 14 <= 21)
+    (11 <= order_hour <= 14) or
+    (18 <= order_hour <= 21)
 ) else 0
 
-is_weekend = 0
+is_weekend = 1 if order_day_of_week in [5,6] else 0
 
 high_traffic = 1 if traffic_level_score >= 7 else 0
 
 severe_weather = 1 if weather_severity_score >= 7 else 0
 
+traffic_weather_interaction = (
+    traffic_level_score * weather_severity_score
+)
+
 prep_time_ratio = (
     preparation_time_minutes /
     (delivery_distance_km + 1)
-)
-
-traffic_weather_interaction = (
-    traffic_level_score *
-    weather_severity_score
 )
 
 # =====================================================
@@ -390,13 +312,17 @@ input_data = pd.DataFrame({
     'restaurant_rating': [restaurant_rating],
     'delivery_partner_rating': [delivery_partner_rating],
     'number_of_items': [number_of_items],
-    'delivery_partner_experience_years': [delivery_partner_experience_years],
+    'delivery_partner_experience_years': [
+        delivery_partner_experience_years
+    ],
     'is_peak_hour': [is_peak_hour],
     'is_weekend': [is_weekend],
     'high_traffic': [high_traffic],
     'severe_weather': [severe_weather],
     'prep_time_ratio': [prep_time_ratio],
-    'traffic_weather_interaction': [traffic_weather_interaction]
+    'traffic_weather_interaction': [
+        traffic_weather_interaction
+    ]
 })
 
 # =====================================================
@@ -416,10 +342,12 @@ input_data = input_data[feature_columns]
 
 prediction = model.predict(input_data)[0]
 
-probability = model.predict_proba(input_data)[0][1]
+probability = model.predict_proba(
+    input_data
+)[0][1]
 
 # =====================================================
-# RISK COLOR
+# RISK INFO
 # =====================================================
 
 risk_color = (
@@ -431,18 +359,25 @@ risk_color = (
 )
 
 risk_text = (
-    "High"
+    "HIGH"
     if probability >= 0.7
-    else "Medium"
+    else "MEDIUM"
     if probability >= 0.3
-    else "Low"
+    else "LOW"
 )
 
 # =====================================================
 # TOP METRIC CARDS
 # =====================================================
 
+st.markdown(
+    '<p class="section-title">📊 Prediction Overview</p>',
+    unsafe_allow_html=True
+)
+
 card1, card2, card3, card4 = st.columns(4)
+
+# CARD 1
 
 with card1:
 
@@ -463,6 +398,8 @@ with card1:
 
     </div>
     """, unsafe_allow_html=True)
+
+# CARD 2
 
 with card2:
 
@@ -490,6 +427,8 @@ with card2:
     </div>
     """, unsafe_allow_html=True)
 
+# CARD 3
+
 with card3:
 
     st.markdown(f"""
@@ -504,11 +443,13 @@ with card3:
         </div>
 
         <div class="metric-sub">
-        Operational Risk Status
+        Operational Status
         </div>
 
     </div>
     """, unsafe_allow_html=True)
+
+# CARD 4
 
 with card4:
 
@@ -519,27 +460,25 @@ with card4:
         MODEL STATUS
         </div>
 
-        <div class="metric-value" style="color:#4ade80">
-        Healthy
+        <div class="metric-value" style="color:#22c55e">
+        ACTIVE
         </div>
 
         <div class="metric-sub">
-        Model performing normally
+        System Operational
         </div>
 
     </div>
     """, unsafe_allow_html=True)
 
 # =====================================================
-# PREMIUM GAUGE
+# GAUGE CHART
 # =====================================================
 
 st.markdown(
     '<p class="section-title">📊 Predicted Delay Risk</p>',
     unsafe_allow_html=True
 )
-
-st.markdown('<div class="metric-card">', unsafe_allow_html=True)
 
 fig = go.Figure(go.Indicator(
 
@@ -550,44 +489,36 @@ fig = go.Figure(go.Indicator(
     number={
         'suffix': "%",
         'font': {
-            'size': 52,
+            'size': 48,
             'color': "white"
         }
-    },
-
-    title={
-        'text': "Probability of Delivery Delay",
-        'font': {'size': 24}
     },
 
     gauge={
 
         'axis': {
-            'range': [0, 100],
-            'tickcolor': "white"
+            'range': [0,100]
         },
 
         'bar': {
             'color': "#f97316"
         },
 
-        'bgcolor': "rgba(0,0,0,0)",
-
         'steps': [
 
             {
-                'range': [0,30],
-                'color': "#22c55e"
+                'range':[0,30],
+                'color':"#22c55e"
             },
 
             {
-                'range': [30,70],
-                'color': "#f59e0b"
+                'range':[30,70],
+                'color':"#fbbf24"
             },
 
             {
-                'range': [70,100],
-                'color': "#ef4444"
+                'range':[70,100],
+                'color':"#ef4444"
             }
         ]
     }
@@ -596,7 +527,7 @@ fig = go.Figure(go.Indicator(
 fig.update_layout(
     paper_bgcolor='rgba(0,0,0,0)',
     font={'color': "white"},
-    height=450
+    height=400
 )
 
 st.plotly_chart(
@@ -604,161 +535,14 @@ st.plotly_chart(
     use_container_width=True
 )
 
-st.markdown('</div>', unsafe_allow_html=True)
-
 # =====================================================
-# TOP CONTRIBUTORS
+# OPERATIONAL SUMMARY
 # =====================================================
 
 st.markdown(
-    '<p class="section-title">⚠️ Top Risk Contributors</p>',
+    '<p class="section-title">📋 Current Operational Summary</p>',
     unsafe_allow_html=True
 )
-
-contributors = {
-
-    "Traffic Level": traffic_level_score * 10,
-    "Weather Severity": weather_severity_score * 10,
-    "Delivery Distance": delivery_distance_km * 3,
-    "Preparation Time": preparation_time_minutes * 1.5
-}
-
-for name, value in contributors.items():
-
-    st.markdown(f"""
-    <div style="
-        display:flex;
-        justify-content:space-between;
-        color:white;
-        margin-bottom:5px;
-        font-weight:600;
-    ">
-        <span>{name}</span>
-        <span>{value:.0f}%</span>
-    </div>
-    """, unsafe_allow_html=True)
-
-    st.progress(min(value/100,1.0))
-
-# =====================================================
-# INSIGHTS
-# =====================================================
-
-st.markdown(
-    '<p class="section-title">📈 Operational Insights</p>',
-    unsafe_allow_html=True
-)
-
-if probability >= 0.7:
-
-    insight = """
-    High delivery risk detected.
-    Traffic congestion and preparation time
-    are the main contributors.
-    """
-
-elif probability >= 0.3:
-
-    insight = """
-    Moderate operational risk detected.
-    Delivery conditions should be monitored.
-    """
-
-else:
-
-    insight = """
-    Operational conditions appear stable.
-    """
-
-st.markdown(f"""
-<div class="insight-box">
-📌 {insight}
-</div>
-""", unsafe_allow_html=True)
-
-# =====================================================
-# SUMMARY
-# =====================================================
-
-st.markdown(
-    '''
-    <p class="section-title">
-    📋 Current Operational Summary
-    </p>
-    ''',
-    unsafe_allow_html=True
-)
-
-# =====================================================
-# SUMMARY CSS
-# =====================================================
-
-st.markdown("""
-<style>
-
-.summary-box{
-
-    background: linear-gradient(
-        145deg,
-        rgba(15,23,42,0.95),
-        rgba(30,41,59,0.85)
-    );
-
-    border:1px solid rgba(255,255,255,0.08);
-
-    padding:22px;
-
-    border-radius:20px;
-
-    backdrop-filter: blur(12px);
-
-    -webkit-backdrop-filter: blur(12px);
-
-    box-shadow:
-        0 8px 24px rgba(0,0,0,0.25);
-
-    text-align:center;
-
-    transition:0.3s ease;
-
-    min-height:130px;
-}
-
-.summary-box:hover{
-    transform: translateY(-4px);
-    border:1px solid rgba(96,165,250,0.4);
-}
-
-.summary-title{
-
-    color:#94a3b8;
-
-    font-size:15px;
-
-    font-weight:600;
-
-    margin-bottom:14px;
-
-    letter-spacing:0.5px;
-}
-
-.summary-value{
-
-    color:white;
-
-    font-size:32px;
-
-    font-weight:800;
-
-    line-height:1.2;
-}
-
-</style>
-""", unsafe_allow_html=True)
-
-# =====================================================
-# SUMMARY CARDS
-# =====================================================
 
 sum1, sum2, sum3, sum4 = st.columns(4)
 
@@ -766,15 +550,13 @@ with sum1:
 
     st.markdown(f"""
     <div class="summary-box">
-
         <div class="summary-title">
-        🚚 Distance
+        Distance
         </div>
 
         <div class="summary-value">
-        {delivery_distance_km:.1f} km
+        {delivery_distance_km} km
         </div>
-
     </div>
     """, unsafe_allow_html=True)
 
@@ -782,15 +564,13 @@ with sum2:
 
     st.markdown(f"""
     <div class="summary-box">
-
         <div class="summary-title">
-        ⏱️ Prep Time
+        Prep Time
         </div>
 
         <div class="summary-value">
         {preparation_time_minutes} min
         </div>
-
     </div>
     """, unsafe_allow_html=True)
 
@@ -798,15 +578,13 @@ with sum3:
 
     st.markdown(f"""
     <div class="summary-box">
-
         <div class="summary-title">
-        🚦 Traffic
+        Traffic
         </div>
 
         <div class="summary-value">
         {traffic_level_score}/10
         </div>
-
     </div>
     """, unsafe_allow_html=True)
 
@@ -814,17 +592,99 @@ with sum4:
 
     st.markdown(f"""
     <div class="summary-box">
-
         <div class="summary-title">
-        🌧️ Weather
+        Weather
         </div>
 
         <div class="summary-value">
         {weather_severity_score}/10
         </div>
-
     </div>
     """, unsafe_allow_html=True)
+
+# =====================================================
+# OPERATIONAL INSIGHTS
+# =====================================================
+
+st.markdown(
+    '<p class="section-title">📈 Operational Insights</p>',
+    unsafe_allow_html=True
+)
+
+insights = []
+
+if delivery_distance_km > 15:
+    insights.append(
+        "Long delivery distance significantly increases delay probability."
+    )
+
+if traffic_level_score >= 7:
+    insights.append(
+        "Heavy traffic congestion detected."
+    )
+
+if preparation_time_minutes > 30:
+    insights.append(
+        "Restaurant preparation bottleneck detected."
+    )
+
+if len(insights) == 0:
+    insights.append(
+        "Operational conditions appear stable."
+    )
+
+for insight in insights:
+
+    st.markdown(f"""
+    <div class="insight-box">
+    📌 {insight}
+    </div>
+    """, unsafe_allow_html=True)
+
+# =====================================================
+# RECOMMENDATIONS
+# =====================================================
+
+st.markdown(
+    '<p class="section-title">✅ Operational Recommendations</p>',
+    unsafe_allow_html=True
+)
+
+recommendations = []
+
+if traffic_level_score >= 7:
+    recommendations.append(
+        "Assign experienced drivers during high traffic periods."
+    )
+
+if delivery_distance_km > 15:
+    recommendations.append(
+        "Adjust ETA dynamically for long-distance deliveries."
+    )
+
+if preparation_time_minutes > 30:
+    recommendations.append(
+        "Improve restaurant preparation workflow."
+    )
+
+if weather_severity_score >= 7:
+    recommendations.append(
+        "Notify customers proactively about weather-related delays."
+    )
+
+if len(recommendations) == 0:
+    recommendations.append(
+        "Current operation appears efficient."
+    )
+
+for rec in recommendations:
+
+    st.markdown(f"""
+    <div class="recommend-box">
+    ✅ {rec}
+    </div>
+    """, unsafe_allow_html=True)
+
 # =====================================================
 # FOOTER
 # =====================================================
