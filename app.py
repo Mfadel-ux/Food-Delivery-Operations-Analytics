@@ -370,96 +370,37 @@ confidence = (
 )
 
 # =====================================================
-# METRIC CARDS
+# PREDICTION OVERVIEW
 # =====================================================
 
-st.markdown(
-    '<p class="section-title">📊 Prediction Overview</p>',
-    unsafe_allow_html=True
-)
+st.markdown("## 📊 Prediction Overview")
 
-card1, card2, card3, card4 = st.columns(4)
+col1, col2, col3, col4 = st.columns(4)
 
-with card1:
+with col1:
+    st.metric(
+        label="Delay Risk",
+        value=f"{probability:.1%}"
+    )
 
-    st.markdown(f"""
-    <div class="metric-card">
+with col2:
+    st.metric(
+        label="Confidence",
+        value=f"{confidence:.1%}"
+    )
 
-        <div class="metric-title">
-        DELAY RISK
-        </div>
+with col3:
+    st.metric(
+        label="Risk Level",
+        value=risk_text
+    )
 
-        <div class="metric-value" style="color:{risk_color}">
-        {probability:.1%}
-        </div>
-
-        <div class="metric-sub">
-        Prediction Probability
-        </div>
-
-    </div>
-    """, unsafe_allow_html=True)
-
-with card2:
-
-    st.markdown(f"""
-    <div class="metric-card">
-
-        <div class="metric-title">
-        CONFIDENCE
-        </div>
-
-        <div class="metric-value" style="color:#60a5fa">
-        {confidence:.1%}
-        </div>
-
-        <div class="metric-sub">
-        Model Confidence
-        </div>
-
-    </div>
-    """, unsafe_allow_html=True)
-
-with card3:
-
-    st.markdown(f"""
-    <div class="metric-card">
-
-        <div class="metric-title">
-        RISK LEVEL
-        </div>
-
-        <div class="metric-value" style="color:{risk_color}">
-        {risk_text}
-        </div>
-
-        <div class="metric-sub">
-        Operational Status
-        </div>
-
-    </div>
-    """, unsafe_allow_html=True)
-
-with card4:
-
-    st.markdown("""
-    <div class="metric-card">
-
-        <div class="metric-title">
-        MODEL STATUS
-        </div>
-
-        <div class="metric-value" style="color:#22c55e">
-        ACTIVE
-        </div>
-
-        <div class="metric-sub">
-        System Operational
-        </div>
-
-    </div>
-    """, unsafe_allow_html=True)
-
+with col4:
+    st.metric(
+        label="Model Status",
+        value="ACTIVE"
+    )
+    
 # =====================================================
 # GAUGE
 # =====================================================
@@ -528,77 +469,34 @@ st.plotly_chart(
 # SUMMARY
 # =====================================================
 
-st.markdown(
-    '<p class="section-title">📋 Operational Summary</p>',
-    unsafe_allow_html=True
-)
+st.markdown("## 📋 Operational Summary")
 
-sum1, sum2, sum3, sum4 = st.columns(4)
+s1, s2, s3, s4 = st.columns(4)
 
-with sum1:
+with s1:
+    st.metric(
+        "Distance",
+        f"{delivery_distance_km} km"
+    )
 
-    st.markdown(f"""
-    <div class="summary-box">
+with s2:
+    st.metric(
+        "Prep Time",
+        f"{preparation_time_minutes} min"
+    )
 
-        <div class="summary-title">
-        Distance
-        </div>
+with s3:
+    st.metric(
+        "Traffic",
+        f"{traffic_level_score}/10"
+    )
 
-        <div class="summary-value">
-        {delivery_distance_km} km
-        </div>
-
-    </div>
-    """, unsafe_allow_html=True)
-
-with sum2:
-
-    st.markdown(f"""
-    <div class="summary-box">
-
-        <div class="summary-title">
-        Prep Time
-        </div>
-
-        <div class="summary-value">
-        {preparation_time_minutes} min
-        </div>
-
-    </div>
-    """, unsafe_allow_html=True)
-
-with sum3:
-
-    st.markdown(f"""
-    <div class="summary-box">
-
-        <div class="summary-title">
-        Traffic
-        </div>
-
-        <div class="summary-value">
-        {traffic_level_score}/10
-        </div>
-
-    </div>
-    """, unsafe_allow_html=True)
-
-with sum4:
-
-    st.markdown(f"""
-    <div class="summary-box">
-
-        <div class="summary-title">
-        Weather
-        </div>
-
-        <div class="summary-value">
-        {weather_severity_score}/10
-        </div>
-
-    </div>
-    """, unsafe_allow_html=True)
-
+with s4:
+    st.metric(
+        "Weather",
+        f"{weather_severity_score}/10"
+    )
+    
 # =====================================================
 # INSIGHTS
 # =====================================================
