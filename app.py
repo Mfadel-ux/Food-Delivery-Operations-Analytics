@@ -33,62 +33,102 @@ feature_columns = joblib.load(
 st.markdown(
     """
     <style>
-    .main {
+
+    .stApp {
         background-color: #0f172a;
     }
 
-    .title {
+    .main-title {
         font-size: 42px;
-        font-weight: bold;
+        font-weight: 800;
         color: white;
         margin-bottom: 0;
     }
 
     .subtitle {
         font-size: 18px;
-        color: #cbd5e1;
+        color: #94a3b8;
         margin-top: 0;
+        margin-bottom: 30px;
     }
 
-    .metric-card {
+    .card {
         background-color: #1e293b;
-        padding: 20px;
-        border-radius: 15px;
-        text-align: center;
+        padding: 25px;
+        border-radius: 18px;
+        box-shadow: 0px 4px 15px rgba(0,0,0,0.25);
     }
 
-    .recommendation-box {
-        background-color: #111827;
+    .risk-high {
+        background-color: #7f1d1d;
         padding: 20px;
         border-radius: 15px;
         color: white;
+        font-size: 24px;
+        font-weight: bold;
+        text-align: center;
     }
+
+    .risk-low {
+        background-color: #14532d;
+        padding: 20px;
+        border-radius: 15px;
+        color: white;
+        font-size: 24px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .section-title {
+        font-size: 28px;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 20px;
+    }
+
+    .insight-box {
+        background-color: #1e293b;
+        padding: 18px;
+        border-radius: 12px;
+        color: white;
+        margin-bottom: 10px;
+    }
+
+    .recommend-box {
+        background-color: #064e3b;
+        padding: 18px;
+        border-radius: 12px;
+        color: white;
+        margin-bottom: 10px;
+    }
+
     </style>
     """,
     unsafe_allow_html=True
 )
-
 # =====================================================
 # HEADER
 # =====================================================
 
 st.markdown(
-    '<p class="title">🚚 Food Delivery Delay Prediction System</p>',
+    """
+    <p class="main-title">
+        🚚 Food Delivery Delay Prediction System
+    </p>
+
+    <p class="subtitle">
+        AI-Powered Operational Delivery Risk Analytics
+    </p>
+    """,
     unsafe_allow_html=True
 )
-
-st.markdown(
-    '<p class="subtitle">AI-Powered Operational Delivery Risk Analytics</p>',
-    unsafe_allow_html=True
-)
-
-st.divider()
 
 # =====================================================
 # SIDEBAR INPUT
 # =====================================================
 
 st.sidebar.header("📥 Delivery Information")
+
 # =====================================================
 # HIDDEN DEFAULT VALUES
 # =====================================================
@@ -363,49 +403,89 @@ probability = model.predict_proba(
 # MAIN RESULT SECTION
 # =====================================================
 
-col1, col2 = st.columns(2)
+st.divider()
+
+col1, col2 = st.columns([1,1])
 
 with col1:
 
-    st.subheader("🚨 Delay Prediction")
+    st.markdown(
+        '<p class="section-title">🚨 Delay Prediction</p>',
+        unsafe_allow_html=True
+    )
 
     if prediction == 1:
-        st.error(
-            f"HIGH DELAY RISK ({probability:.1%})"
+
+        st.markdown(
+            f"""
+            <div class="risk-high">
+                HIGH DELAY RISK<br>
+                {probability:.1%}
+            </div>
+            """,
+            unsafe_allow_html=True
         )
+
     else:
-        st.success(
-            f"LOW DELAY RISK ({1-probability:.1%})"
+
+        st.markdown(
+            f"""
+            <div class="risk-low">
+                LOW DELAY RISK<br>
+                {(1-probability):.1%}
+            </div>
+            """,
+            unsafe_allow_html=True
         )
 
 with col2:
 
-    st.subheader("📊 Delay Probability")
+    st.markdown(
+        '<p class="section-title">📊 Delay Probability</p>',
+        unsafe_allow_html=True
+    )
 
     fig = go.Figure(go.Indicator(
+
         mode = "gauge+number",
+
         value = probability * 100,
-        title = {'text': "Delay Risk %"},
+
+        number = {
+            'suffix': "%",
+            'font': {'size': 42}
+        },
+
         gauge = {
-            'axis': {'range': [None, 100]},
-            'bar': {'color': "red"},
+
+            'axis': {
+                'range': [0, 100],
+                'tickwidth': 1
+            },
+
+            'bar': {
+                'color': "#ef4444"
+            },
+
             'steps': [
-                {'range': [0, 30], 'color': "green"},
-                {'range': [30, 70], 'color': "orange"},
-                {'range': [70, 100], 'color': "red"}
+                {'range': [0, 30], 'color': "#22c55e"},
+                {'range': [30, 70], 'color': "#f59e0b"},
+                {'range': [70, 100], 'color': "#ef4444"}
             ]
         }
     ))
 
     fig.update_layout(
-        height=300
+        paper_bgcolor="#0f172a",
+        font={'color': "white"},
+        height=320,
+        margin=dict(l=20, r=20, t=40, b=20)
     )
 
     st.plotly_chart(
         fig,
         use_container_width=True
     )
-
 # =====================================================
 # OPERATIONAL INSIGHTS
 # =====================================================
@@ -442,7 +522,15 @@ if len(insights) == 0:
     )
 
 for insight in insights:
-    st.info(insight)
+
+    st.markdown(
+        f"""
+        <div class="insight-box">
+            📌 {insight}
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
 # =====================================================
 # RECOMMENDATION ENGINE
@@ -480,7 +568,15 @@ if len(recommendations) == 0:
     )
 
 for rec in recommendations:
-    st.success(rec)
+
+    st.markdown(
+        f"""
+        <div class="recommend-box">
+            ✅ {rec}
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
 # =====================================================
 # FOOTER
