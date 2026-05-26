@@ -219,6 +219,157 @@ The project combines:
 
 into a complete end-to-end analytics workflow suitable for real-world delivery platform scenarios.
 
+
+🚚 Delivery Delay Prediction Model
+📌 Project Objective
+
+This machine learning model predicts whether a food delivery order is likely to experience a delivery delay based on operational conditions such as:
+
+1. Delivery distance
+2. Traffic congestion
+3. Weather severity
+4. Restaurant preparation time
+5. Driver quality
+6. Peak operational hours
+
+The objective is to help food delivery platforms proactively identify operational risks and improve customer experience through data-driven decisions.
+
+🎯 Business Problem
+
+Food delivery platforms frequently face operational inefficiencies that lead to:
+
+1. Late deliveries
+2. Poor customer satisfaction
+3. Increased refunds
+4. Higher operational costs
+
+This project aims to build an operational risk prediction system that can classify whether an order is at risk of delay before delivery completion.
+
+🧠 Machine Learning Approach
+Target Variable
+
+The target variable is generated using the 75th percentile of delivery time:
+delay_threshold = df_delay[
+    'delivery_time_minutes'
+].quantile(0.75)
+
+df_delay['is_delayed'] = (
+    df_delay['delivery_time_minutes']
+    > delay_threshold
+).astype(int)
+
+Why Quantile 75%?
+
+Orders above the 75th percentile are considered operationally abnormal because they take significantly longer than typical deliveries.
+
+This approach:
+
+1. Creates a dynamic threshold based on data distribution
+2. Avoids arbitrary manual labeling
+3. Helps focus on operational outliers
+
+⚙️ Selected Features
+
+The model only uses operational features that are realistically available before delivery completion.
+| Feature                           | Description                     |
+| --------------------------------- | ------------------------------- |
+| delivery_distance_km              | Delivery travel distance        |
+| preparation_time_minutes          | Restaurant preparation duration |
+| traffic_level_score               | Traffic congestion level        |
+| weather_severity_score            | Weather condition severity      |
+| restaurant_rating                 | Restaurant service quality      |
+| delivery_partner_rating           | Driver performance rating       |
+| number_of_items                   | Order complexity                |
+| delivery_partner_experience_years | Driver experience               |
+| is_peak_hour                      | Peak-hour indicator             |
+| is_weekend                        | Weekend indicator               |
+| high_traffic                      | High traffic binary flag        |
+| severe_weather                    | Severe weather binary flag      |
+| prep_time_ratio                   | Prep time relative to distance  |
+| traffic_weather_interaction       | Combined operational pressure   |
+
+
+🚫 Leakage Prevention
+
+Several features were intentionally excluded to avoid data leakage.
+| Feature                 | Reason                                            |
+| ----------------------- | ------------------------------------------------- |
+| delivery_time_minutes   | Directly defines the target                       |
+| delayed_delivery_flag   | Already contains delay outcome                    |
+| refund_flag             | Known after delivery completion                   |
+| customer_rating         | Available after delivery                          |
+| final_amount_paid       | Post-transaction information                      |
+| estimated_delivery_time | Potentially correlated with actual target outcome |
+
+
+Classification Report
+| Class    | Precision | Recall | F1-score |
+| -------- | --------- | ------ | -------- |
+| No Delay | 0.98      | 0.92   | 0.95     |
+| Delay    | 0.78      | 0.94   | 0.85     |
+
+
+🔍 Feature Importance Insights
+
+Top operational contributors to delivery delays:
+
+Delivery Distance
+Traffic Level
+Severe Weather
+Preparation Time
+Peak Hour Operations
+
+Negative coefficients do not indicate "bad features."
+They simply mean that higher values reduce the probability of delivery delay.
+
+Example:
+
+Higher driver ratings reduce delay risk
+Better operational quality improves delivery reliability
+
+
+📈 Operational Insights
+
+The model reveals that delivery delays are primarily driven by operational bottlenecks rather than customer behavior.
+
+Main operational risk factors:
+
+Long travel distances
+Heavy traffic congestion
+Severe weather conditions
+Slow restaurant preparation
+
+This makes the model highly useful for:
+
+ETA optimization
+Dynamic driver allocation
+Operational monitoring
+Real-time risk prediction systems
+
+
+🖥️ Interactive Dashboard
+
+The project includes a Streamlit dashboard for real-time operational simulation and delay prediction.
+
+1. Dashboard Features
+2. Real-time delay probability prediction
+3. Operational risk monitoring
+4. Interactive scenario simulation
+5. Risk contributor visualization
+6. Operational recommendation engine
+
+UI Link :
+https://food-delivery-operations-analytics-dja9y6evnvzsxyjircgnzd.streamlit.app/
+
+<img width="1919" height="866" alt="image" src="https://github.com/user-attachments/assets/9a34e763-d231-47e1-a9a0-f0f6b4f78ccc" />
+
+
+
+
+
+
+
+
 **Author**
 
 Muhammad Fadel
