@@ -366,8 +366,15 @@ https://food-delivery-operations-analytics-dja9y6evnvzsxyjircgnzd.streamlit.app/
 
 
 
+# 📌 Business Recommendations
 
+Based on model findings, food delivery platforms should:
 
+- Prioritize experienced drivers during peak traffic hours
+- Dynamically adjust ETA for long-distance deliveries
+- Improve restaurant preparation workflows
+- Implement proactive weather delay notifications
+- Monitor high-risk operational zones in real time
 
 
 **Author**
